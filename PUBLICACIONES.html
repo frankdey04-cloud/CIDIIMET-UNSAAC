@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicaciones — CIDIIMET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1815;
+    --bronze:#8A5A34;
+    --bronze-dim:#6E4527;
+    --gold:#C89B2C;
+    --steel:#9C9992;
+    --parchment:#F2E9D0;
+    --paper:#FAF6EC;
+    --paper-2:#F1EADA;
+    --text:#241F1A;
+    --muted:#6B6255;
+    --line: rgba(27,24,21,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--paper); color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif; font-size:16px; line-height:1.6;
+  }
+  h1,h2,h3{ font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 28px; }
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(250,246,236,0.92); backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{ display:flex; align-items:center; justify-content:space-between; padding:14px 28px; }
+  .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; }
+  .brand img{ height:42px; width:auto; }
+  .brand span{ font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.05rem; letter-spacing:0.02em; }
+  .brand small{ display:block; font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:0.62rem; color:var(--muted); letter-spacing:0.04em; }
+  .back-link{
+    display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    font-size:0.88rem; font-weight:500; color:var(--bronze-dim);
+  }
+  .back-link svg{ width:16px; height:16px; }
+
+  main{ padding:64px 0 100px; }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; letter-spacing:0.14em;
+    text-transform:uppercase; color:var(--bronze-dim);
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--bronze-dim); display:inline-block; }
+  h1.title{ font-size:clamp(2rem,4vw,2.8rem); font-weight:700; color:var(--ink); }
+  main > .wrap > p.lead{ margin-top:16px; max-width:56ch; color:var(--muted); }
+
+  .pub-list{ margin-top:48px; display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); }
+  .pub-item{
+    background:var(--paper); padding:28px 30px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+    text-decoration:none; transition:background .2s ease;
+  }
+  .pub-item.is-link:hover{ background:var(--paper-2); }
+  .pub-item.is-link:hover .pub-arrow{ opacity:1; transform:translate(0,0); }
+  .pub-meta .tag{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--bronze); }
+  .pub-meta h3{ margin-top:8px; font-size:1.08rem; font-weight:600; color:var(--ink); }
+  .pub-meta .authors{ margin-top:6px; font-size:0.88rem; color:var(--muted); }
+  .pub-arrow{ width:18px; height:18px; color:var(--bronze); opacity:0; transform:translate(-4px,4px); transition:opacity .2s ease, transform .2s ease; flex-shrink:0; }
+
+  .empty-card{
+    border:1px dashed var(--line); padding:44px; background:var(--paper);
+    margin-top:48px; text-align:left;
+  }
+  .empty-card .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--bronze-dim); border:1px solid var(--line); padding:5px 11px; border-radius:20px;
+  }
+  .empty-card .pill::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--gold); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+  .empty-card h3{ margin-top:18px; font-size:1.2rem; font-weight:600; color:var(--ink); }
+  .empty-card p{ margin-top:10px; color:var(--muted); font-size:0.94rem; max-width:60ch; }
+
+  footer{ border-top:1px solid var(--line); padding:36px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer .fmark{ display:flex; align-items:center; gap:10px; }
+  footer .fmark img{ height:26px; }
+  footer small{ color:var(--muted); font-size:0.8rem; }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--bronze); outline-offset:2px; }
+  @media (prefers-reduced-motion: reduce){ .empty-card .pill::before{ animation:none; } }
+
+  @media (max-width: 700px){
+    .pub-item{ flex-direction:column; align-items:flex-start; gap:10px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="index.html" class="brand">
+      <img src="assets/logo.png" alt="Logo CIDIIMET">
+      <span>CIDIIMET<small>UNSAAC · Ingeniería Metalúrgica</small></span>
+    </a>
+    <a class="back-link" href="index.html#publicaciones">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      Volver al inicio
+    </a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap">
+    <p class="eyebrow">Producción científica</p>
+    <h1 class="title">Publicaciones</h1>
+    <p class="lead">Artículos, informes técnicos y proyectos de investigación del centro. Cada publicación abrirá su propio documento o enlace.</p>
+
+    <!--
+      CÓMO AGREGAR UNA PUBLICACIÓN NUEVA:
+      Copia este bloque y pégalo dentro de <div class="pub-list">...</div>,
+      reemplazando el texto y el "href" por el link real (PDF, Google Drive, DOI, etc).
+
+      <a class="pub-item is-link" href="RUTA-O-LINK-DEL-PDF.pdf" target="_blank" rel="noopener">
+        <div class="pub-meta">
+          <span class="tag">Metalurgia extractiva · 2026</span>
+          <h3>Título de la publicación</h3>
+          <p class="authors">Autor Uno, Autor Dos</p>
+        </div>
+        <svg class="pub-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H9M17 7V15"/></svg>
+      </a>
+    -->
+
+    <div class="pub-list" id="pubList">
+      <!-- Aquí se agregarán las publicaciones, una por una, siguiendo el ejemplo de arriba -->
+    </div>
+
+    <div class="empty-card">
+      <span class="pill">En proceso</span>
+      <h3>Aún no hay publicaciones cargadas</h3>
+      <p>Estamos organizando los primeros trabajos de investigación del centro. En cuanto estén listos, cada uno aparecerá aquí como una tarjeta seleccionable que abre su propio PDF o enlace.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fmark">
+      <img src="assets/logo.png" alt="CIDIIMET">
+      <small>CIDIIMET · Escuela Profesional de Ingeniería Metalúrgica · UNSAAC</small>
+    </div>
+    <small>© 2026 CIDIIMET. Todos los derechos reservados.</small>
+  </div>
+</footer>
+
+</body>
+</html>
